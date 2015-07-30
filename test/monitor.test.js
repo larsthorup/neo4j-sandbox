@@ -8,9 +8,12 @@ var monitor = require('../src/monitor');
 
 describe('monitor', function () {
 
-  beforeEach(function () {
+  beforeEach(function (done) {
     this.sinon = sinon.sandbox.create();
-    fakeneo.install(this.sinon);
+    fakeneo.install(this.sinon, done);
+  });
+
+  beforeEach(function () {
     this.monitor = monitor.create();
   });
 
