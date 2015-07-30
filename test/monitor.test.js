@@ -1,22 +1,45 @@
 /* eslint-env node, mocha */
+
+var should = require('chai').should();
+var sinon = require('sinon');
+
+var fakeneo = require('./fakeneo');
 var monitor = require('../src/monitor');
 
 describe('monitor', function () {
 
   beforeEach(function () {
+    this.sinon = sinon.sandbox.create();
+    fakeneo.install(this.sinon);
     this.monitor = monitor.create();
   });
 
-  describe('nodeCount', function () {
+  afterEach(function () {
+    this.sinon.restore();
+  });
 
-    it('can tell that the data store is initially empty', function () {
-      this.monitor.nodeCount().should.equal(0);
+  describe('countingNodes', function () {
+
+    it('can tell that the data store is initially empty', function (done) {
+      this.monitor.countingNodes(function (err, nodeCount) {
+        should.not.exist(err);
+        nodeCount.should.equal(0);
+        done();
+      });
     });
 
-    describe.skip('when data has been loaded', function () {
+    describe('when data has been loaded', function () {
 
-      it('reports the number of nodes', function () {
-        this.monitor.nodeCount().should.equal(2);
+      beforeEach(function () {
+        fakeneo.addNodes(2);
+      });
+
+      it('reports the number of nodes', function (done) {
+        this.monitor.countingNodes(function (err, nodeCount) {
+          should.not.exist(err);
+          nodeCount.should.equal(2);
+          done();
+        });
       });
 
     });

@@ -1,10 +1,17 @@
-function Monitor () {
+var neo = require('./neo');
 
+function Monitor () {
+  this.db = neo.instance();
 }
 
-Monitor.prototype.nodeCount = function () {
-  return 0;
-  // return query('match n return count(*)');
+Monitor.prototype.countingNodes = function (next) {
+  return this.db.cypherQuery('match n return count(*)', function (err, result) {
+    if (!err) {
+      next(null, result.data[0]);
+    } else {
+      next(err);
+    }
+  });
 };
 
 function create () {
