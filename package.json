@@ -1,0 +1,26 @@
+{
+  "name": "neo4j-sandbox",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/larsthorup/neo4j-sandbox.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/larsthorup/neo4j-sandbox/issues"
+  },
+  "homepage": "https://github.com/larsthorup/neo4j-sandbox",
+  "dependencies": {
+    "node-neo4j": "^2.0.3"
+  },
+  "scripts": {
+    "test": "semistandard && mocha"
+  },
+  "devDependencies": {
+    "chai": "^3.2.0",
+    "mocha": "^2.2.5"
+  }
+}
