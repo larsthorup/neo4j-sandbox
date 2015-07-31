@@ -1,9 +1,10 @@
 # neo4j-sandbox
 
-- download and install jdk8
+- download and install jdk7
+
+- `npm test`
 
 - `brew install neo4j`
 - `neo4j start`
-
-- `npm test`
 - `node cli`
+- `neo4j stop`

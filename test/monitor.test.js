@@ -5,12 +5,13 @@ var sinon = require('sinon');
 
 var fakeneo = require('./fakeneo');
 var monitor = require('../src/monitor');
+var neo = require('../src/neo');
 
 describe('monitor', function () {
 
   beforeEach(function (done) {
     this.sinon = sinon.sandbox.create();
-    fakeneo.install(this.sinon, done);
+    fakeneo.installing(this, done);
   });
 
   beforeEach(function () {
@@ -33,8 +34,8 @@ describe('monitor', function () {
 
     describe('when data has been loaded', function () {
 
-      beforeEach(function () {
-        fakeneo.addNodes(2);
+      beforeEach(function (done) {
+        neo.instance().cypherQuery('CREATE (ben:User {name:"Ben"}),(arnold:User {name:"Arnold"})', done);
       });
 
       it('reports the number of nodes', function (done) {
