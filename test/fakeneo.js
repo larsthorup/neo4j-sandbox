@@ -30,14 +30,18 @@ function createSupervisor (neoLocation, next) {
 }
 
 function stopNeo (next) {
-  supervisor.stop(function (err) {
-    if (!err) {
-      console.log('Local Neo4j stopped');
-      next(null);
-    } else {
-      next(err);
-    }
-  });
+  if (supervisor) {
+    supervisor.stop(function (err) {
+      if (!err) {
+        console.log('Local Neo4j stopped');
+        next(null);
+      } else {
+        next(err);
+      }
+    });
+  } else {
+    next(null);
+  }
 }
 
 function startNeo (next) {
