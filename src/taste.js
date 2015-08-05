@@ -29,14 +29,15 @@ function cleaning () {
   return neo.instance().querying(query);
 }
 
-function computingCompatibility (personName1, personName2) {
+function computingCompatibility (name1, name2) {
   var queries = [
-    'MATCH (p1:Person {name:"' + personName1 + '"})-[r:Dislike]->(f:Food)<-[:Dislike]-(p2:Person {name:"' + personName2 + '"}) RETURN count(r)',
-    'MATCH (p1:Person {name:"' + personName1 + '"})-[r:Like]->(f:Food)<-[:Like]-(p2:Person {name:"' + personName2 + '"}) RETURN count(r)',
-    'MATCH (p1:Person {name:"' + personName1 + '"})-[r:Dislike]->(f:Food)<-[:Like]-(p2:Person {name:"' + personName2 + '"}) RETURN count(r)',
-    'MATCH (p1:Person {name:"' + personName1 + '"})-[r:Like]->(f:Food)<-[:Dislike]-(p2:Person {name:"' + personName2 + '"}) RETURN count(r)'
+    'MATCH (p1:Person {name: {name1} })-[r:Dislike]->(f:Food)<-[:Dislike]-(p2:Person {name: {name2} }) RETURN count(r)',
+    'MATCH (p1:Person {name: {name1} })-[   r:Like]->(f:Food)<-[   :Like]-(p2:Person {name: {name2} }) RETURN count(r)',
+    'MATCH (p1:Person {name: {name1} })-[r:Dislike]->(f:Food)<-[   :Like]-(p2:Person {name: {name2} }) RETURN count(r)',
+    'MATCH (p1:Person {name: {name1} })-[   r:Like]->(f:Food)<-[:Dislike]-(p2:Person {name: {name2} }) RETURN count(r)'
   ];
-  return neo.instance().querying(queries).then(function (results) {
+  var params = _.fill(Array(4), {name1: name1, name2: name2});
+  return neo.instance().querying(queries, params).then(function (results) {
     var counts = _(results).map(function (result) { return result.data[0]; }).value();
     var shareCount = _(counts).sum();
     var matchCount = counts[0] + counts[1];
