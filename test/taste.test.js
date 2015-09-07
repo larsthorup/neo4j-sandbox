@@ -8,7 +8,6 @@ var food = require('../src/food');
 var taste = require('../src/taste');
 
 describe('taste', function () {
-
   beforeEach(function (done) {
     this.sinon = sinon.sandbox.create();
     fakeneo.installing(this, done);
@@ -19,7 +18,6 @@ describe('taste', function () {
   });
 
   describe('compatibility', function () {
-
     beforeEach(function () {
       return Promise.all([
         person.creating(['Barak', 'Lars']),
@@ -50,6 +48,5 @@ describe('taste', function () {
     it('should compute compatibility as matches / shares ', function () {
       return taste.computingCompatibility('Lars', 'Barak').should.eventually.be.closeTo(0.67, 0.01); // Note: 2/3
     });
-
   });
 });

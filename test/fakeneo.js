@@ -82,15 +82,21 @@ function createInstance (next) {
 }
 
 function creatingInstance (next) {
-  async.waterfall([
-    getNeoInstall,
-    createSupervisor,
-    stopNeo,
-    startNeo,
-    wait,
-    cleanNeo,
-    createInstance
-  ], next);
+  var isWindows = process.platform === 'win32';
+  if (isWindows) {
+    var instance = new Neo4j('http://neo4j:neo4j@localhost:7484');
+    next(null, instance);
+  } else {
+    async.waterfall([
+      getNeoInstall,
+      createSupervisor,
+      stopNeo,
+      startNeo,
+      wait,
+      cleanNeo,
+      createInstance
+    ], next);
+  }
 }
 
 var instance = null;

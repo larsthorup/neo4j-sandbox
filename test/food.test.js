@@ -6,7 +6,6 @@ var fakeneo = require('./fakeneo');
 var food = require('../src/food');
 
 describe('food', function () {
-
   beforeEach(function (done) {
     this.sinon = sinon.sandbox.create();
     fakeneo.installing(this, done);
@@ -17,7 +16,6 @@ describe('food', function () {
   });
 
   describe('creating', function () {
-
     beforeEach(function () {
       return food.creating(['Steak', 'Lunch']);
     });
@@ -29,7 +27,5 @@ describe('food', function () {
     it('should count the food', function () {
       return food.counting().should.become(2);
     });
-
   });
-
 });

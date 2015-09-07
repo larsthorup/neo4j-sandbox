@@ -9,6 +9,7 @@ Monitor.prototype.countingNodes = function (next) {
     if (!err) {
       next(null, result.data[0]);
     } else {
+      console.log(err);
       next(err);
     }
   });
